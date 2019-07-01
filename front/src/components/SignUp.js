@@ -6,8 +6,9 @@ class SignUp extends Component {
         this.state = {
             email: '',
             password: '',
-            firstName: '',
-            lastName: ''
+            name: '',
+            lastName: '',
+            flash: ''
         }
     }
 
@@ -19,13 +20,27 @@ class SignUp extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        console.log(JSON.stringify(this.state));
+        fetch("/auth/signup",
+        {
+            method:  'POST',
+            headers:  new Headers({
+                    'Content-Type':  'application/json'
+            }),
+            body:  JSON.stringify(this.state),
+        })
+        .then(res  =>  res.json())
+        .then(
+            res  =>  this.setState({flash:  res.flash}),
+            err  =>  this.setState({flash:  err.flash})
+        )
+        console.log("user submitted:", JSON.stringify(this.state));
     }
 
     render() {
         return (
             <div>
-                <h1 className='title'>{JSON.stringify(this.state)}</h1>
+                <p>{this.state.flash}</p>
+                <h1 className='title'>SIGN UP</h1>
                 <form className='form' onSubmit={this.handleSubmit}>
                     <input
                         type='email'
@@ -47,7 +62,7 @@ class SignUp extends Component {
                     />
                     <input
                         type='text'
-                        name='firstName'
+                        name='name'
                         placeholder='Enter your first name...'
                         onChange={this.updateEmailField}
                     />
