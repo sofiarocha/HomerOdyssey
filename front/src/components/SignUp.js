@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TextField, Button, Snackbar } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 class SignUp extends Component {
     constructor(props) {
@@ -57,6 +58,7 @@ class SignUp extends Component {
         const { open } = this.state;
         return (
             <div>
+                <Link to="/signin">Sign in</Link>
                 <h1 className='title'>SIGN UP</h1>
                 <form className='form' onSubmit={this.handleSubmit} style={{ marginRight: 8 }}>
                     <TextField
@@ -100,11 +102,19 @@ class SignUp extends Component {
                         fullWidth
                         onChange={this.updateEmailField}
                         />
-                    <Button variant="contained" color="primary" type="submit">Submit</Button>
+                    <Link to="/">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                        >
+                            Submit
+                        </Button>
+                    </Link>
                 </form>
                 <Snackbar
                     open={open}
-                    autoHideDuration={324000}
+                    autoHideDuration={6000}
                     onClose={this.handleClose}
                     message={<p>{this.state.flash}</p>}
                 />
